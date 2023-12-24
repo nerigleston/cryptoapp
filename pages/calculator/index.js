@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import BaseURLReal from '../../services/baseURL/index1';
 
 const CalculatorScreen = () => {
   const [cryptoPrices, setCryptoPrices] = useState([]);
   const [selectedCrypto, setSelectedCrypto] = useState('bitcoin');
   const [cryptoAmount, setCryptoAmount] = useState('0');
-  const [totalValue, setTotalValue] = useState('0,00'); // Inicializando com o formato desejado
+  const [totalValue, setTotalValue] = useState('0,00');
 
   useEffect(() => {
     fetchCryptoPrices();
@@ -37,7 +37,6 @@ const CalculatorScreen = () => {
   const calculateTotalValue = () => {
     const cryptoValue = parseFloat(cryptoAmount) * getCryptoPrice(selectedCrypto);
 
-    // Formatando o valor para ter vírgula como separador de milhares e dois dígitos após o ponto decimal
     const formattedValue = cryptoValue.toLocaleString('pt-BR', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
@@ -78,7 +77,12 @@ const CalculatorScreen = () => {
           onChangeText={(text) => setCryptoAmount(text)}
         />
       </View>
-      <Button title="Calcular" onPress={calculateTotalValue} />
+      <TouchableOpacity
+        style={[styles.calculateButton]}
+        onPress={calculateTotalValue}
+      >
+        <Text style={[styles.buttonText]}>Calcular</Text>
+      </TouchableOpacity>
       <Text style={styles.resultText}>Total em Reais: R${totalValue}</Text>
     </View>
   );
@@ -86,6 +90,7 @@ const CalculatorScreen = () => {
 
 const styles = {
   container: {
+    backgroundColor: '#f5f5f5',
     flex: 1,
     padding: 16,
   },
@@ -104,7 +109,7 @@ const styles = {
     padding: 10,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: 'lightblue',
+    borderColor: 'gray',
     marginRight: 10,
     marginBottom: 10,
   },
@@ -118,6 +123,16 @@ const styles = {
     marginBottom: 10,
     textAlign: 'center',
     borderRadius: 5,
+  },
+  calculateButton: {
+    backgroundColor: 'black',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
   },
   resultText: {
     marginTop: 10,

@@ -25,7 +25,7 @@ const CurrencyPage = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Valores em Relação ao Real</Text>
+      <Text style={styles.headerText}>Moedas em Relação ao Real</Text>
       <ScrollView>
         {currencyData &&
           Object.keys(currencyData).map((key) => {
@@ -49,6 +49,7 @@ const styles = {
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: '#f5f5f5',
   },
   headerText: {
     fontSize: 20,
@@ -59,7 +60,7 @@ const styles = {
     padding: 10,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: 'lightblue',
+    borderColor: 'gray',
     marginBottom: 10,
   },
 };

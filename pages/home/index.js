@@ -34,7 +34,7 @@ const CryptoListScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Crypto Prices</Text>
+      <Text style={styles.headerText}>Preços das Criptomoedas em USD</Text>
       <FlatList
         data={cryptoPrices}
         keyExtractor={(item) => item.id}
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor: '#f5f5f5',
   },
   headerText: {
     fontSize: 20,
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: 'gray',
   },
   cryptoImage: {
     width: 45,
