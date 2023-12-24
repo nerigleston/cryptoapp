@@ -93,6 +93,7 @@ const styles = {
     backgroundColor: '#f5f5f5',
     flex: 1,
     padding: 16,
+    marginTop: 10,
   },
   headerText: {
     fontSize: 20,

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Home from './pages/home/index';
 import Calculator from './pages/calculator/index';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -12,8 +12,7 @@ const Tab = createBottomTabNavigator();
 const App = () => {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <SafeAreaView style={{ flex: 1 }}>
+      <NavigationContainer >
           <Tab.Navigator
             screenOptions={{
               headerShown: false,
@@ -59,7 +58,6 @@ const App = () => {
               }}
             />
           </Tab.Navigator>
-        </SafeAreaView>
       </NavigationContainer>
     </SafeAreaProvider>
   );
