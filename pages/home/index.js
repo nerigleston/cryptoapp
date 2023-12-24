@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
-import BaseURLDol from '../../services/baseURL/index';
+import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import BaseURLDol from '../../services/baseURL/BaseURLDol';
 
 const CryptoListScreen = () => {
   const [cryptoPrices, setCryptoPrices] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchCryptoPrices();
@@ -29,25 +30,33 @@ const CryptoListScreen = () => {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Preços das Criptomoedas em USD</Text>
-      <FlatList
-        data={cryptoPrices}
-        keyExtractor={(item) => item.id}
-        numColumns={3}
-        renderItem={({ item }) => (
-          <View style={styles.cryptoCard}>
-            <Image source={{ uri: item.image }} style={styles.cryptoImage} />
-            <Text style={styles.cryptoText}>{item.symbol.toUpperCase()}</Text>
-            <Text style={styles.cryptoText}>{item.name}</Text>
-            <Text style={styles.cryptoText}>{`$${item.currentPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</Text>
-          </View>
-        )}
-      />
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#000000" />
+        </View>
+      ) : (
+        <FlatList
+          data={cryptoPrices}
+          keyExtractor={(item) => item.id}
+          numColumns={3}
+          renderItem={({ item }) => (
+            <View style={styles.cryptoCard}>
+              <Image source={{ uri: item.image }} style={styles.cryptoImage} />
+              <Text style={styles.cryptoText}>{item.symbol.toUpperCase()}</Text>
+              <Text style={styles.cryptoText}>{item.name}</Text>
+              <Text style={styles.cryptoText}>{`$${item.currentPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</Text>
+            </View>
+          )}
+        />
+      )}
     </View>
   );
 };
@@ -80,6 +89,11 @@ const styles = StyleSheet.create({
   },
   cryptoText: {
     textAlign: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

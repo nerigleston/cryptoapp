@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
+import BaseURLReal from '../../services/baseURL/BaseURLReal';
 
 const CurrencyPage = () => {
   const [currencyData, setCurrencyData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchCurrencyData();
@@ -10,7 +12,7 @@ const CurrencyPage = () => {
 
   const fetchCurrencyData = async () => {
     try {
-      const response = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL,ETH-BRL,DOGE-BRL,USDT-BRL');
+      const response = await fetch(BaseURLReal);
 
       if (response.ok) {
         const data = await response.json();
@@ -20,27 +22,35 @@ const CurrencyPage = () => {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false); // Set loading to false regardless of success or failure
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Moedas em Relação ao Real</Text>
-      <ScrollView>
-        {currencyData &&
-          Object.keys(currencyData).map((key) => {
-            const currency = currencyData[key];
-            return (
-              <View key={key} style={styles.currencyItem}>
-                <Text>Código: {currency.code}</Text>
-                <Text>Código Internacional: {currency.codein}</Text>
-                <Text>Nome: {currency.name}</Text>
-                <Text>Compra (Bid): {currency.bid}</Text>
-                <Text>Venda (Ask): {currency.ask}</Text>
-              </View>
-            );
-          })}
-      </ScrollView>
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#000000" />
+        </View>
+      ) : (
+        <ScrollView>
+          {currencyData &&
+            Object.keys(currencyData).map((key) => {
+              const currency = currencyData[key];
+              return (
+                <View key={key} style={styles.currencyItem}>
+                  <Text>Código: {currency.code}</Text>
+                  <Text>Código Internacional: {currency.codein}</Text>
+                  <Text>Nome: {currency.name}</Text>
+                  <Text>Compra (Bid): {currency.bid}</Text>
+                  <Text>Venda (Ask): {currency.ask}</Text>
+                </View>
+              );
+            })}
+        </ScrollView>
+      )}
     </View>
   );
 };
@@ -62,6 +72,11 @@ const styles = {
     borderWidth: 1,
     borderColor: 'gray',
     marginBottom: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 };
 

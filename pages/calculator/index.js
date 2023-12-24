@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
-import BaseURLReal from '../../services/baseURL/index1';
+import BaseURLBrl from '../../services/baseURL/BaseURLBrl';
 
 const CalculatorScreen = () => {
   const [cryptoPrices, setCryptoPrices] = useState([]);
@@ -14,7 +14,7 @@ const CalculatorScreen = () => {
 
   const fetchCryptoPrices = async () => {
     try {
-      const response = await fetch(BaseURLReal);
+      const response = await fetch(BaseURLBrl);
 
       if (response.ok) {
         const cryptoData = await response.json();
