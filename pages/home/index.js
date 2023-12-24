@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
+import BaseURLDol from '../../services/baseURL/index';
 
-const CryptoListScreen = ({}) => {
+const CryptoListScreen = () => {
   const [cryptoPrices, setCryptoPrices] = useState([]);
 
   useEffect(() => {
@@ -10,9 +11,7 @@ const CryptoListScreen = ({}) => {
 
   const fetchCryptoPrices = async () => {
     try {
-      const response = await fetch(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,ripple'
-      );
+      const response = await fetch(BaseURLDol);
 
       if (response.ok) {
         const cryptoData = await response.json();
@@ -34,17 +33,18 @@ const CryptoListScreen = ({}) => {
   };
 
   return (
-    <View>
-      <Text style={styles.headerText}>Crypto Price Tracker</Text>
+    <View style={styles.container}>
+      <Text style={styles.headerText}>Crypto Prices</Text>
       <FlatList
         data={cryptoPrices}
         keyExtractor={(item) => item.id}
+        numColumns={3}
         renderItem={({ item }) => (
-          <View style={styles.cryptoItemContainer}>
+          <View style={styles.cryptoCard}>
             <Image source={{ uri: item.image }} style={styles.cryptoImage} />
             <Text style={styles.cryptoText}>{item.symbol.toUpperCase()}</Text>
             <Text style={styles.cryptoText}>{item.name}</Text>
-            <Text style={styles.cryptoText}>{`$${item.currentPrice.toFixed(2)}`}</Text>
+            <Text style={styles.cryptoText}>{`$${item.currentPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</Text>
           </View>
         )}
       />
@@ -52,23 +52,34 @@ const CryptoListScreen = ({}) => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+  },
   headerText: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
   },
-  cryptoItemContainer: {
-    flexDirection: 'row',
+  cryptoCard: {
+    flex: 1,
+    flexDirection: 'column',
     justifyContent: 'space-around',
+    alignItems: 'center',
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    margin: 5,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
   cryptoImage: {
     width: 45,
     height: 45,
   },
-};
+  cryptoText: {
+    textAlign: 'center',
+  },
+});
 
 export default CryptoListScreen;

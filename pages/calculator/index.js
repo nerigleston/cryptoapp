@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
+import BaseURLReal from '../../services/baseURL/index1';
 
 const CalculatorScreen = () => {
   const [cryptoPrices, setCryptoPrices] = useState([]);
   const [selectedCrypto, setSelectedCrypto] = useState('bitcoin');
   const [cryptoAmount, setCryptoAmount] = useState('0');
-  const [totalValue, setTotalValue] = useState(0);
+  const [totalValue, setTotalValue] = useState('0,00'); // Inicializando com o formato desejado
 
   useEffect(() => {
     fetchCryptoPrices();
@@ -13,9 +14,7 @@ const CalculatorScreen = () => {
 
   const fetchCryptoPrices = async () => {
     try {
-      const response = await fetch(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,ripple'
-      );
+      const response = await fetch(BaseURLReal);
 
       if (response.ok) {
         const cryptoData = await response.json();
@@ -37,7 +36,14 @@ const CalculatorScreen = () => {
 
   const calculateTotalValue = () => {
     const cryptoValue = parseFloat(cryptoAmount) * getCryptoPrice(selectedCrypto);
-    setTotalValue(cryptoValue);
+
+    // Formatando o valor para ter vírgula como separador de milhares e dois dígitos após o ponto decimal
+    const formattedValue = cryptoValue.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    setTotalValue(formattedValue);
   };
 
   const getCryptoPrice = (cryptoSymbol) => {
@@ -48,8 +54,8 @@ const CalculatorScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Calculadora de Criptomoedas</Text>
-
-      <View style={styles.radioContainer}>
+      <Text style={styles.labelText}>Selecione uma criptomoeda:</Text>
+      <ScrollView>
         {cryptoPrices.map((crypto) => (
           <TouchableOpacity
             key={crypto.id}
@@ -62,8 +68,7 @@ const CalculatorScreen = () => {
             <Text>{crypto.name}</Text>
           </TouchableOpacity>
         ))}
-      </View>
-
+      </ScrollView>
       <View style={styles.inputContainer}>
         <Text style={styles.labelText}>Quantidade:</Text>
         <TextInput
@@ -73,10 +78,8 @@ const CalculatorScreen = () => {
           onChangeText={(text) => setCryptoAmount(text)}
         />
       </View>
-
       <Button title="Calcular" onPress={calculateTotalValue} />
-
-      <Text style={styles.resultText}>Total em Reais: R${totalValue.toFixed(2)}</Text>
+      <Text style={styles.resultText}>Total em Reais: R${totalValue}</Text>
     </View>
   );
 };
@@ -92,18 +95,18 @@ const styles = {
     margin: 10,
   },
   labelText: {
+    marginTop: 10,
+    fontSize: 16,
     marginBottom: 5,
-  },
-  radioContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 10,
+    textAlign: 'center',
   },
   radioOption: {
     padding: 10,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'lightblue',
+    marginRight: 10,
+    marginBottom: 10,
   },
   inputContainer: {
     marginBottom: 10,
@@ -114,10 +117,13 @@ const styles = {
     borderWidth: 1,
     marginBottom: 10,
     textAlign: 'center',
+    borderRadius: 5,
   },
   resultText: {
     marginTop: 10,
     fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 };
 
