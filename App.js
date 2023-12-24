@@ -13,7 +13,7 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+        <SafeAreaView style={{ flex: 1 }}>
           <Tab.Navigator
             screenOptions={{
               headerShown: false,
