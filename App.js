@@ -7,6 +7,7 @@ import Home from './pages/home/index';
 import Calculator from './pages/calculator/index';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CurrencyPage from './pages/moedas';
+import WalletPage from './pages/carteira';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,52 +15,62 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer >
-      <StatusBar backgroundColor="#f5f5f5" barStyle="dark-content" />
-          <Tab.Navigator
-            screenOptions={{
-              headerShown: false,
-              tabBarActiveTintColor: 'black',
-              tabBarInactiveTintColor: 'gray',
-              tabBarLabelStyle: {
-                fontSize: 14,
-                fontWeight: 'bold',
-              },
-              tabBarStyle: {
-                backgroundColor: "#f5f5f5",
-              },
+        <StatusBar backgroundColor="#f5f5f5" barStyle="dark-content" />
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarActiveTintColor: 'black',
+            tabBarInactiveTintColor: 'gray',
+            tabBarLabelStyle: {
+              fontSize: 14,
+              fontWeight: 'bold',
+            },
+            tabBarStyle: {
+              backgroundColor: "#f5f5f5",
+            },
+          }}
+        >
+          <Tab.Screen
+            name="Cryptos"
+            component={Home}
+            options={{
+              tabBarLabel: 'Cryptos',
+              tabBarIcon: ({ color, size }) => (
+                <Icon name="home" size={size} color={color} />
+              ),
             }}
-          >
-            <Tab.Screen
-              name="Cryptos"
-              component={Home}
-              options={{
-                tabBarLabel: 'Cryptos',
-                tabBarIcon: ({ color, size }) => (
-                  <Icon name="home" size={size} color={color} />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Moedas"
-              component={CurrencyPage}
-              options={{
-                tabBarLabel: 'Moedas',
-                tabBarIcon: ({ color, size }) => (
-                  <Icon name="money" size={size} color={color} />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Calculadora"
-              component={Calculator}
-              options={{
-                tabBarLabel: 'Calculadora',
-                tabBarIcon: ({ color, size }) => (
-                  <Icon name="calculator" size={size} color={color} />
-                ),
-              }}
-            />
-          </Tab.Navigator>
+          />
+          <Tab.Screen
+            name="Moedas"
+            component={CurrencyPage}
+            options={{
+              tabBarLabel: 'Moedas',
+              tabBarIcon: ({ color, size }) => (
+                <Icon name="money" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Calculadora"
+            component={Calculator}
+            options={{
+              tabBarLabel: 'Calculadora',
+              tabBarIcon: ({ color, size }) => (
+                <Icon name="calculator" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Carteira"
+            component={WalletPage}
+            options={{
+              tabBarLabel: 'Carteira',
+              tabBarIcon: ({ color, size }) => (
+                <Icon name="star" size={size} color={color} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
   );

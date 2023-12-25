@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
 import BaseURLReal from '../../services/baseURL/BaseURLReal';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const CurrencyPage = () => {
   const [currencyData, setCurrencyData] = useState(null);
@@ -18,18 +19,28 @@ const CurrencyPage = () => {
         const data = await response.json();
         setCurrencyData(data);
       } else {
-        throw new Error('Falha ao carregar dados das moeda');
+        throw new Error('Falha ao carregar dados das moedas');
       }
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false); // Set loading to false regardless of success or failure
+      setIsLoading(false);
     }
+  };
+
+  const handleReload = () => {
+    setIsLoading(true);
+    fetchCurrencyData();
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Moedas em Relação ao Real</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.headerText}>Moedas em Relação ao Real</Text>
+        <TouchableOpacity onPress={handleReload} style={styles.reloadButton}>
+          <Icon name="autorenew" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#000000" />
@@ -44,8 +55,10 @@ const CurrencyPage = () => {
                   <Text>Código: {currency.code}</Text>
                   <Text>Código Internacional: {currency.codein}</Text>
                   <Text>Nome: {currency.name}</Text>
-                  <Text>Compra (Bid): {currency.bid}</Text>
-                  <Text>Venda (Ask): {currency.ask}</Text>
+                  <Text>Valor: {currency.high}</Text>
+                  <Text>Porcentagem de Variação: {currency.pctChange}</Text>
+                  <Text>Compra: {currency.ask}</Text>
+                  <Text>Venda: {currency.bid}</Text>
                 </View>
               );
             })}
@@ -55,12 +68,17 @@ const CurrencyPage = () => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
     backgroundColor: '#f5f5f5',
     marginTop: 10,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   headerText: {
     fontSize: 20,
@@ -79,6 +97,6 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-};
+});
 
 export default CurrencyPage;
