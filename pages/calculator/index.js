@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import BaseURLBrl from '../../services/baseURL/BaseURLBrl';
 
 const CalculatorScreen = () => {
   const [cryptoPrices, setCryptoPrices] = useState([]);
-  const [selectedCrypto, setSelectedCrypto] = useState('bitcoin');
-  const [cryptoAmount, setCryptoAmount] = useState('0');
+  const [selectedCrypto, setSelectedCrypto] = useState('');
+  const [cryptoAmount, setCryptoAmount] = useState('1');
   const [totalValue, setTotalValue] = useState('0,00');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchCryptoPrices();
@@ -27,10 +28,12 @@ const CalculatorScreen = () => {
           }))
         );
       } else {
-        throw new Error('Failed to load crypto prices');
+        throw new Error('Falha ao carregar preços das criptomoedas');
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -54,20 +57,26 @@ const CalculatorScreen = () => {
     <View style={styles.container}>
       <Text style={styles.headerText}>Calculadora de Criptomoedas</Text>
       <Text style={styles.labelText}>Selecione uma criptomoeda:</Text>
-      <ScrollView>
-        {cryptoPrices.map((crypto) => (
-          <TouchableOpacity
-            key={crypto.id}
-            style={[
-              styles.radioOption,
-              { backgroundColor: selectedCrypto === crypto.symbol ? 'lightblue' : 'white' },
-            ]}
-            onPress={() => setSelectedCrypto(crypto.symbol)}
-          >
-            <Text>{crypto.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#000000" />
+        </View>
+      ) : (
+        <ScrollView>
+          {cryptoPrices.map((crypto) => (
+            <TouchableOpacity
+              key={crypto.id}
+              style={[
+                styles.radioOption,
+                { backgroundColor: selectedCrypto === crypto.symbol ? 'lightblue' : 'white' },
+              ]}
+              onPress={() => setSelectedCrypto(crypto.symbol)}
+            >
+              <Text>{crypto.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      )}
       <View style={styles.inputContainer}>
         <Text style={styles.labelText}>Quantidade:</Text>
         <TextInput
@@ -77,11 +86,8 @@ const CalculatorScreen = () => {
           onChangeText={(text) => setCryptoAmount(text)}
         />
       </View>
-      <TouchableOpacity
-        style={[styles.calculateButton]}
-        onPress={calculateTotalValue}
-      >
-        <Text style={[styles.buttonText]}>Calcular</Text>
+      <TouchableOpacity style={styles.calculateButton} onPress={calculateTotalValue}>
+        <Text style={styles.buttonText}>Calcular</Text>
       </TouchableOpacity>
       <Text style={styles.resultText}>Total em Reais: R${totalValue}</Text>
     </View>
@@ -140,6 +146,11 @@ const styles = {
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 };
 

@@ -26,7 +26,7 @@ const CryptoListScreen = () => {
           }))
         );
       } else {
-        throw new Error('Failed to load crypto prices');
+        throw new Error('Falha ao carregar preços de criptomoedas');
       }
     } catch (error) {
       console.error(error);

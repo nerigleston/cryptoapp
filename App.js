@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Home from './pages/home/index';
@@ -13,6 +14,7 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer >
+      <StatusBar backgroundColor="#f5f5f5" barStyle="dark-content" />
           <Tab.Navigator
             screenOptions={{
               headerShown: false,

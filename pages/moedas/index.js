@@ -18,7 +18,7 @@ const CurrencyPage = () => {
         const data = await response.json();
         setCurrencyData(data);
       } else {
-        throw new Error('Failed to load currency data');
+        throw new Error('Falha ao carregar dados das moeda');
       }
     } catch (error) {
       console.error(error);
