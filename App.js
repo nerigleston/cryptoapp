@@ -31,10 +31,10 @@ const App = () => {
           }}
         >
           <Tab.Screen
-            name="Cryptos"
+            name="Criptos"
             component={Home}
             options={{
-              tabBarLabel: 'Cryptos',
+              tabBarLabel: 'Criptos',
               tabBarIcon: ({ color, size }) => (
                 <Icon name="home" size={size} color={color} />
               ),
@@ -61,10 +61,10 @@ const App = () => {
             }}
           />
           <Tab.Screen
-            name="Carteira"
+            name="Favoritos"
             component={WalletPage}
             options={{
-              tabBarLabel: 'Carteira',
+              tabBarLabel: 'Favoritos',
               tabBarIcon: ({ color, size }) => (
                 <Icon name="star" size={size} color={color} />
               ),

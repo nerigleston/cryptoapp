@@ -30,27 +30,30 @@ const WalletPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Minha Carteira</Text>
+      <Text style={styles.headerText}>Minhas Criptomoedas</Text>
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#000000" />
         </View>
       ) : (
         <ScrollView>
-          {walletCrypto.map((crypto, index) => {
-            return (
+          {walletCrypto.length === 0 ? (
+            <View style={styles.emptyWalletContainer}>
+              <Text style={styles.emptyWalletText}>
+                Nenhuma criptomoeda adicionada. Por favor, acrescente suas criptomoedas favoritas à carteira.
+              </Text>
+            </View>
+          ) : (
+            walletCrypto.map((crypto, index) => (
               <View key={index} style={styles.cryptoCard}>
-                <Image
-                  style={styles.cryptoImage}
-                  source={{ uri: crypto.image }}
-                />
+                <Image style={styles.cryptoImage} source={{ uri: crypto.image }} />
                 <Text>{crypto.name}</Text>
                 <Text>{`$${crypto.currentPrice
                   .toFixed(2)
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</Text>
               </View>
-            );
-          })}
+            ))
+          )}
         </ScrollView>
       )}
     </View>
@@ -76,6 +79,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 10,
   },
   cryptoImage: {
     width: 50,
@@ -86,6 +90,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  emptyWalletContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyWalletText: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#333333',
   },
 });
 

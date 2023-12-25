@@ -92,7 +92,7 @@ const CryptoListScreen = ({ navigation }) => {
         name: crypto.name,
         symbol: crypto.symbol,
         currentPrice: crypto.currentPrice,
-        image: crypto.image, // Add the image property
+        image: crypto.image,
       });
 
       await AsyncStorage.setItem('wallet', JSON.stringify(wallet));
