@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import styles from './../../../pages/moedas/styles';
+import styles from './styles';
 
 const CurrencyItem = ({ currency }) => (
   <View style={styles.currencyItem}>

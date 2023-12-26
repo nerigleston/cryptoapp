@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import CryptoCard from './../cryptoCard/index';
-import styles from './../../../pages/home/styles';
+import styles from './styles';
 
 const CryptoList = ({
   cryptoPrices,

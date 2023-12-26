@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
-import styles from './../../../pages/carteira/styles';
+import styles from './styles';
 
 const CryptoCard = ({ crypto }) => (
   <View style={styles.cryptoCard}>

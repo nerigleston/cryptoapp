@@ -16,14 +16,6 @@ const styles = {
     marginBottom: 5,
     textAlign: 'center',
   },
-  radioOption: {
-    padding: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: 'gray',
-    marginRight: 10,
-    marginBottom: 10,
-  },
   inputContainer: {
     marginBottom: 10,
   },
@@ -43,12 +35,6 @@ const styles = {
   },
   buttonText: {
     color: 'white',
-    textAlign: 'center',
-  },
-  resultText: {
-    marginTop: 10,
-    fontSize: 16,
-    fontWeight: 'bold',
     textAlign: 'center',
   },
   loadingContainer: {

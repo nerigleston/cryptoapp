@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import styles from './../../../pages/calculator/styles';
+import styles from './styles';
 
 const CalculatorResult = ({ totalValue }) => (
   <View>

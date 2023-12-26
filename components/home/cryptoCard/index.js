@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import styles from './../../../pages/home/styles';
+import styles from './styles';
 
 const CryptoCard = ({ crypto, onAddToWallet, onRemoveFromWallet, isAddedToWallet }) => (
   <View style={styles.cryptoCard}>
