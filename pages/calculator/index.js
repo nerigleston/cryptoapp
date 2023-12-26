@@ -27,7 +27,7 @@ const CalculatorScreen = () => {
             id: data.id,
             name: data.name,
             symbol: data.symbol,
-            image: data.image,
+image:data.image,
             currentPrice: parseFloat(data.current_price),
           }))
         );
