@@ -27,6 +27,7 @@ const CalculatorScreen = () => {
             id: data.id,
             name: data.name,
             symbol: data.symbol,
+            image: data.image,
             currentPrice: parseFloat(data.current_price),
           }))
         );
@@ -34,7 +35,7 @@ const CalculatorScreen = () => {
         throw new Error('Falha ao carregar preços das criptomoedas');
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

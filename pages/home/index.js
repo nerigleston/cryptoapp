@@ -60,7 +60,7 @@ const CryptoListScreen = ({ navigation }) => {
         throw new Error('Falha ao carregar preços de criptomoedas');
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

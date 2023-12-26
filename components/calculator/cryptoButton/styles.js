@@ -6,6 +6,9 @@ const styles = {
     borderColor: 'gray',
     marginRight: 10,
     marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   }
 };
 

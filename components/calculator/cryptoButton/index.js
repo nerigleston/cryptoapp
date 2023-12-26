@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, Image } from 'react-native';
 import styles from './styles';
 
 const CryptoButton = ({ crypto, selected, onPress }) => (
@@ -11,6 +11,7 @@ const CryptoButton = ({ crypto, selected, onPress }) => (
     onPress={() => onPress(crypto.symbol)}
   >
     <Text>{crypto.name}</Text>
+    <Image source={{ uri: crypto.image }} style={{ width: 30, height: 30 }} />
   </TouchableOpacity>
 );
 

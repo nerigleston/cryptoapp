@@ -24,7 +24,7 @@ const CurrencyPage = () => {
         throw new Error('Falha ao carregar dados das moedas');
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
