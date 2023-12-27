@@ -4,6 +4,8 @@ const styles = {
     flex: 1,
     padding: 16,
     marginTop: 10,
+    justifyContent: 'center',
+    flexDirection: 'column',
   },
   headerText: {
     fontSize: 20,
@@ -20,6 +22,7 @@ const styles = {
     marginBottom: 10,
   },
   inputField: {
+    backgroundColor: '#ffffff',
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
